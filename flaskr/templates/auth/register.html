@@ -1,0 +1,82 @@
+{% extends 'Homepage.html' %}
+{% block title %}注册{% endblock %}
+{% block head_title %}
+    <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">注册</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-white rounded text-center p-5 shadow-down">
+                        <h4 class="mb-80">请输入宁的信息</h4>
+                        <div class="shadow-down mb-4">
+                            <img src="{{ url_for("static", filename="images/default/default.jpg") }}" alt="author" width="20" style="max-width: 300px;max-height: 300px"
+                                 class="img-fluid w-100 rounded-lg border-thick border-white" id="show">
+                        </div>
+                        <form method="post" enctype="multipart/form-data" class="row">
+                            <div class="col-12">
+                                <label for="avatar" class="btn-transparent" style="cursor: pointer">上传一个头像</label>
+                                <input type="file" name="avatar" id="avatar" style="display: none"
+                                       accept="image/png, image/jpeg, image/jpg" onchange="changepic(this)">
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" id="username" name="username" placeholder="输入用户名"
+                                       class="form-control px-0 mb-4" required>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="password" id="password" name="password" placeholder="输入密码"
+                                       class="form-control px-0 mb-4" required>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="password" id="password2" name="password2" placeholder="确认密码"
+                                       class="form-control px-0 mb-4" required>
+                            </div>
+                            <div class="col-lg-6 col-10 mx-auto">
+                                <button class="btn btn-outline-success w-75" id="submit" type="submit" onclick="return validate()">注册</button>
+                                <button class="btn btn-outline-warning w-75" type="reset">重新输入</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+          function validate() {
+              var pwd1 = document.getElementById("password").value;
+              var pwd2 = document.getElementById("password2").value;
+		<!-- 对比两次输入的密码 -->
+             if (pwd1!==pwd2){
+                 alert("两次输入密码不一致");
+                 return false;
+             }
+             return true
+          }
+      </script>
+    <script>
+        function changepic(obj) {
+            //console.log(obj.files[0]);//这里可以获取上传文件的name
+            var newsrc = getObjectURL(obj.files[0]);
+            document.getElementById('show').src = newsrc;
+        }
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
+{% endblock %}

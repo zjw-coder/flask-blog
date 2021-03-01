@@ -1,0 +1,98 @@
+{% extends 'Homepage.html' %}
+{% block title %} {{ info['username'] }} {% endblock %}
+{% block head_title %}
+    <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">修改个人信息</h1>
+    </div>
+{% endblock %}
+{% block content %}
+
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title">{{ info['username'] }} 的个人信息</h2>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-white rounded text-center p-5 shadow-down">
+                        <h4 class="mb-80">Contact Form</h4>
+                        <div class="shadow-down mb-4">
+                            <img src="{{ url_for('static', filename='/images/upload/avatars/'+info['avatar']) }}"
+                                 alt="author" width="20" style="max-width: 300px;max-height: 300px"
+                                 class="img-fluid w-100 rounded-lg border-thick border-white" id="show">
+                        </div>
+                        <form method="post" enctype="multipart/form-data" class="row">
+                            <div class="col-12">
+                                {# <button onclick="avatar.click()" class="btn btn-transparent">上传头像</button>#}
+                                <label for="avatar" class="btn-transparent" style="cursor: pointer">上传一个头像</label>
+                                <input type="file" name="avatar" id="avatar" style="display: none"
+                                       value="{{ request.form['avatar'] or info['avatar'] }}"
+                                       accept="image/png, image/jpeg, image/jpg" onchange="changepic(this)">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="nickname" name="nickname" placeholder="昵称" onfocus="this.select()"
+                                       class="form-control px-0 mb-4"
+                                       value="{{ request.form['nickname'] or info['nickname'] }}">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" id="address" name="address" placeholder="邮箱" onfocus="this.select()"
+                                       class="form-control px-0 mb-4" value="{{ request.form['address'] or info['address'] }}" >
+                            </div>
+                            <div class="col-12">
+                                <textarea name="description" id="description" class="form-control px-0 mb-4" onfocus="this.select()"
+                                          placeholder="简单的介绍你自己">{{ request.form['description'] or info['description'] }}</textarea>
+                            </div>
+                            <div class="col-lg-6 col-10 mx-auto">
+                                <button class="btn btn-primary w-100">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        function changepic(obj) {
+            //console.log(obj.files[0]);//这里可以获取上传文件的name
+            var newsrc = getObjectURL(obj.files[0]);
+            document.getElementById('show').src = newsrc;
+        }
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
+
+
+
+    {#    <form method="post" enctype="multipart/form-data">#}
+    {#        <label for="avatar" class="user_info">头像:</label>#}
+    {#        <br>#}
+    {#        <input type="file" name="avatar" id="avatar" value="{{ request.form['avatar'] or info['avatar'] }}">#}
+    {#        <label for="nickname" class="user_info">昵称:</label>#}
+    {#        <input name="nickname" id="nickname" value="{{ request.form['nickname'] or info['nickname'] }}">#}
+    {#        <br>#}
+    {#        <label for="address" class="user_info">地址:</label>#}
+    {#        <input name="address" id="address" value="{{ request.form['address'] or info['address'] }}">#}
+    {#        <br>#}
+    {#        <label for="description" class="user_info">个人简介:</label>#}
+    {#        <textarea id="description"#}
+    {#                  name="description">{{ request.form['description'] or info['description'] }}</textarea>#}
+    {#        <br>#}
+    {#        <input type="submit" value="保存" class="btn-two green rounded">#}
+    {#    </form>#}
+    {#    <hr>#}
+{% endblock %}

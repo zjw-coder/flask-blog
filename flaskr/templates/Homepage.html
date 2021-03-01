@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}{% endblock %} | MyBlog
+    </title>
+    {% block somestyles %}
+    {% endblock %}
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="theme/plugins/bootstrap/bootstrap.min.css") }}">
+    <!-- slick slider -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="theme/plugins/slick/slick.css") }}">
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="theme/plugins/themify-icons/themify-icons.css") }}">
+    <!-- Main Stylesheet -->
+    <link href="{{ url_for("static", filename="theme/css/style.css") }}" rel="stylesheet">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="{{ url_for("static", filename="theme/images/favicon.ico") }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for("static", filename="theme/images/favicon.ico") }}" type="image/x-icon">
+
+</head>
+<body>
+<header class="navigation fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand font-tertiary h3" href="/">
+            <img src="{{ url_for("static", filename="theme/images/logo.png") }}" alt="Myself">
+        </a>
+
+        <div class="collapse navbar-collapse text-center" id="navigation">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">所有文章</a>
+                </li>
+                {% if g.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('blog.create') }}">写文章</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('auth.info', id=g.user['id']) }}"
+                           class="nav-link">{{ g.user['username'] }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('auth.logout') }}" class="nav-link">注销</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ url_for('auth.register') }}" class="nav-link">注册</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('auth.login') }}" class="nav-link">登录</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- page title -->
+<section class="page-title bg-primary position-relative">
+    <div class="container">
+        <div class="row">
+            {% block head_title %}
+            {% endblock %}
+        </div>
+    </div>
+    <!-- background shapes -->
+    <img src="{{ url_for("static", filename="theme/images/illustrations/page-title.png") }}" alt="illustrations"
+         class="bg-shape-1 w-100">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/leaf-pink-round.png") }}" alt="illustrations"
+         class="bg-shape-2">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/dots-cyan.png") }}" alt="illustrations"
+         class="bg-shape-3">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/leaf-orange.png") }}" alt="illustrations"
+         class="bg-shape-4">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/leaf-yellow.png") }}" alt="illustrations"
+         class="bg-shape-5">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/dots-group-cyan.png") }}" alt="illustrations"
+         class="bg-shape-6">
+    <img src="{{ url_for("static", filename="theme/images/illustrations/leaf-cyan-lg.png") }}" alt="illustrations"
+         class="bg-shape-7">
+</section>
+<!-- /page title -->
+
+
+<!-- blog -->
+{% block content %}
+{% endblock %}
+<!-- /blog -->
+
+
+<!-- footer -->
+<footer class="bg-dark">
+    <div class="border-top text-center border-dark py-5">
+        <p class="mb-0 text-light">Copyright ©
+            <script>
+                var CurrentYear = new Date().getFullYear()
+                document.write(CurrentYear)
+            </script>
+            - 基于 flask 框架的 博客
+        </p>
+        <p>本站已经运行了: <span id="js-running"></span></p>
+    </div>
+</footer>
+<!-- /footer -->
+
+
+<!-- jQuery -->
+<script src="{{ url_for("static", filename="theme/plugins/jQuery/jquery.min.js") }}"></script>
+<!-- Bootstrap JS -->
+<script src="{{ url_for("static", filename="theme/plugins/bootstrap/bootstrap.min.js") }}"></script>
+<!-- slick slider -->
+<script src="{{ url_for("static", filename="theme/plugins/slick/slick.min.js") }}"></script>
+<!-- filter -->
+<script src="{{ url_for("static", filename="theme/plugins/shuffle/shuffle.min.js") }}"></script>
+
+<!-- Main Script -->
+<script src="{{ url_for("static", filename="theme/js/script.js") }}"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script>
+    var startTime = "2020-05-15";
+    var calculationTime = function (startTime) {
+        var s1 = new Date(startTime.replace(/-/g, "/")), s2 = new Date(),
+            runTime = parseInt((s2.getTime() - s1.getTime()) / 1000);
+        var year = Math.floor(runTime / 86400 / 365);
+        runTime = runTime % (86400 * 365);
+        var month = Math.floor(runTime / 86400 / 30);
+        runTime = runTime % (86400 * 30);
+        var day = Math.floor(runTime / 86400);
+        runTime = runTime % 86400;
+        var hour = Math.floor(runTime / 3600);
+        runTime = runTime % 3600;
+        var minute = Math.floor(runTime / 60);
+        runTime = runTime % 60;
+        var second = runTime;
+        document.querySelector(".runningTime > .year").innerText = year;
+        document.querySelector(".runningTime > .month").innerText = month;
+        document.querySelector(".runningTime > .day").innerText = day;
+        document.querySelector(".runningTime > .hour").innerText = hour;
+        document.querySelector(".runningTime > .minute").innerText = minute;
+        document.querySelector(".runningTime > .second").innerText = second
+    };
+    setInterval("calculationTime(startTime)", 1000);
+    var node = document.createElement("span");
+    node.innerHTML = '该站点运行了 <label class="year">0</label> 年 <label class="month">0</label> 月 <label class="day">0</label> 日 <label class="hour">0</label> 时 <label class="minute">0</label> 分 <label class="second">0</label> 秒';
+    node.className = "runningTime";
+    document.getElementById("js-running").appendChild(node);
+</script>
+
+
+</body>
+</html>

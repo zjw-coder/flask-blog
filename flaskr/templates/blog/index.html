@@ -1,0 +1,58 @@
+{% extends 'Homepage.html' %}
+{% block title %} 所有文章 {% endblock %}
+{% block head_title %}
+    <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">所有文章</h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <article class="card shadow">
+                            <img class="rounded card-img-top" style="max-height: 100%;max-width: 100%"
+                                 src="{{ url_for('static', filename='/images/upload/postImages/'+post['postImage']) }}"
+                                 alt="post-thumb">
+                            <div class="card-body">
+                                <h4 class="card-title"><a class="text-dark"
+                                                          href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}">
+                                    {{ post['title'] }}</a>
+                                </h4>
+                                <p class="cars-text">{{ post['summary'] }}</p>
+                                <p class="about">by <a
+                                        href="{{ url_for('auth.info', id=post['author_id']) }}">{{ post['username'] }}</a>
+                                    on {{ post['created'].strftime('%Y-%m-%d') }}</p>
+                                <a href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}"
+                                   class="btn btn-xs btn-primary">Read More</a>
+                            </div>
+                        </article>
+                    </div>
+                    {#    {% for post in posts %}#}
+                    {#        <article class="post">#}
+                    {#            <header>#}
+                    {#                <div>#}
+                    {#                    <h1>#}
+                    {#                        <a href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}">{{ post['title'] }}</a>#}
+                    {#                    </h1>#}
+                    {#                    <div class="about">by <a#}
+                    {#                            href="{{ url_for('auth.info', id=post['author_id']) }}">{{ post['username'] }}</a>#}
+                    {#                        on {{ post['created'].strftime('%Y-%m-%d') }}</div>#}
+                    {#                </div>#}
+                    {#                {% if g.user['id'] == post['author_id'] %}#}
+                    {#                    <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">编辑文章</a>#}
+                    {#                {% endif %}#}
+                    {#            </header>#}
+                    {#            <p class="summary">{{ post['summary'] }}</p>#}
+                    {#        </article>#}
+                    {#        {% if not loop.last %}#}
+                    {#            <hr>#}
+                    {#        {% endif %}#}
+                {% else %}
+                    <h3>还没有文章发布~,快登录发表吧~</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'Homepage.html' %}
+{% block title %}登录{% endblock %}
+{% block head_title %}
+    <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">登录</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-white rounded text-center p-5 shadow-down">
+                        <h4 class="mb-80">请输入用户名和密码</h4>
+                        <form method="post" enctype="multipart/form-data" class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="username" name="username" placeholder="用户名"
+                                       class="form-control px-0 mb-4"
+                                       required>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="password" id="password" name="password" placeholder="密码"
+                                       class="form-control px-0 mb-4"
+                                       required>
+                            </div>
+                            <div class="col-md-6">
+                                {#                                <button class="btn btn-primary w-100">保存</button>#}
+                                <input type="submit" value="登录" class="btn btn-success">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

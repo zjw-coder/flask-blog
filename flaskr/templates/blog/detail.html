@@ -1,0 +1,74 @@
+{% extends 'Homepage.html' %}
+{% block somestyles %}
+    <link rel="stylesheet" href="../../static/styles.css">
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+{% endblock %}
+{% block title %}
+    {{ post['title'] }}
+{% endblock %}
+{% block head_title %}
+    <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">{{ post['title'] }}</h1>
+    </div>
+{% endblock %}
+{% block content %}
+
+    <section class="section">
+        <div class="container">
+            <div class="col-12">
+                <div class="btn-group btn-group-toggle justify-content-center d-flex">
+                    <p class="font-secondary">Published on {{ post['created'].strftime('%Y-%m-%d') }} by <span
+                            class="text-primary"><a
+                            href="{{ url_for('auth.info', id=post['author_id']) }}">{{ post['username'] }}</a></span>
+                    </p>
+                </div>
+                {% if g.user['id'] == post['author_id'] %}
+                    <div class="btn-group btn-group-toggle justify-content-center d-flex">
+                        <a class="btn btn-xs btn-light" href="{{ url_for('blog.update', id=post['id']) }}">编辑文章</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {#                    <h3 class="font-tertiary mb-5">{{ post['title'] }}</h3>#}
+                    <div class="content">
+                        {#                        <img src="{{ url_for('static', filename='images/upload/postImages/'+post['postImage']) }}" alt="post-thumb" class="img-fluid rounded float-left mr-5 mb-4">#}
+                        {{ post_body | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- comment -->
+    <section class="section" data-background="{{ url_for('static',filename="theme/images/backgrounds/bg-dots.png") }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title">评论</h2>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-white rounded text-center p-5 shadow-down">
+                        <div id="comments"></div>
+                    </div>
+                </div>
+                <script>
+                    new Valine({
+                        el: '#comments',
+                        appId: 'eLIUaG0QmIrM06RLR7ib4AWK-gzGzoHsz',
+                        appKey: '4WOHEFT9gxfwKDLWQ3Dlc1xi'
+                    })
+                </script>
+            </div>
+        </div>
+    </section>
+    <!-- /comment -->
+{% endblock %}

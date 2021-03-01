@@ -1,0 +1,117 @@
+{% extends 'Homepage.html' %}
+
+{% block title %}
+    {{ info['username'] }}
+{% endblock %}
+
+{% block head_title %}
+    <div class="col-12">
+        <h1 class="text-white font-tertiary">About Me</h1>
+    </div>
+{% endblock %}
+{#{% block header_subtitle %}#}
+{#    {% if g.user['id'] == info['id'] %}#}
+{#        <a class="action" href="{{ url_for('auth.update', id=g.user['id']) }}">修改个人信息</a>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+
+{% block content %}
+    <!-- about -->
+    <section class="section pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 style="margin: 20px">
+                        用户名: {{ info['username'] }}
+                    </h4>
+                    <h4 style="margin: 20px">
+                        昵称: {{ info['nickname'] }}
+                    </h4>
+                    <h4 style="margin: 20px">
+                        我的邮箱: {{ info['address'] }}
+                    </h4>
+                    <h4 style="margin: 20px">
+                        个人简介: {{ info['description'] }}
+                    </h4>
+                </div>
+                <div class="col-md-4 text-center drag-lg-top">
+                    <div class="shadow-down mb-4">
+                        <img src="{{ url_for('static', filename='/images/upload/avatars/'+info['avatar']) }}"
+                             alt="author"
+                             class="img-fluid w-100 rounded-lg border-thick border-white">
+                    </div>
+                    <h4>{{ info['nickname'] }}</h4>
+                    {% if g.user['id'] == info['id'] %}
+                        <a href="{{ url_for('auth.update', id=g.user['id']) }}"
+                           class="btn btn-xs btn-primary">修改我的信息</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /about -->
+
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-title">近期文章</h2>
+                </div>
+                {% for post in posts %}
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <article class="card shadow">
+                            <img class="rounded card-img-top" src="{{ url_for('static', filename='/images/upload/postImages/'+post['postImage']) }}" alt="post-thumb">
+                            <div class="card-body">
+                                <h4 class="card-title"><a class="text-dark"
+                                                          href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}">
+                                    {{ post['title'] }}</a>
+                                </h4>
+                                <p class="cars-text">{{ post['summary'] }}</p>
+                                <p class="about"><a
+                                        href="{{ url_for('auth.info', id=post['author_id']) }}">{{ post['username'] }}</a>
+                                    on {{ post['created'].strftime('%Y-%m-%d') }}</p>
+                                <a href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}"
+                                   class="btn btn-xs btn-primary">Read More</a>
+                                {% if g.user['id'] == post['author_id'] %}
+                                    <a class="btn btn-xs btn-light" href="{{ url_for('blog.update', id=post['id']) }}">编辑文章</a>
+                                {% endif %}
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {#    <p class="user_info">#}
+    {#        头像:#}
+    {#    </p>#}
+    {#    <img src="{{ url_for('static', filename='/images/upload/avatars/'+info['avatar']) }}" alt="头像">#}
+    {#    <p class="user_info">#}
+    {#        用户名: {{ info['username'] }}#}
+    {#    </p>#}
+    {#    <p class="user_info">#}
+    {#        昵称: {{ info['nickname'] }}#}
+    {#    </p>#}
+    {#    <p class="user_info">#}
+    {#        地址: {{ info['address'] }}#}
+    {#    </p>#}
+    {#    <p class="user_info">#}
+    {#        个人简介: {{ info['description'] }}#}
+    {#    </p>#}
+
+    {#    {% if posts %}#}
+    {#        <hr>#}
+    {#        <h1>近期文章</h1>#}
+    {#    {% endif %}#}
+    {#    {% for post in posts %}#}
+    {#        <h2 class=""></h2>#}
+    {#        <a href="{{ url_for('blog.get_post_in_detail',id=post['id'],title=post['title']) }}">{{ post['title'] }}</a>#}
+    {#        <p class="summary">摘要: {{ post['summary'] }}</p>#}
+    {#        {% if not loop.last %}#}
+    {#            <hr>#}
+    {#        {% endif %}#}
+    {#    {% endfor %}#}
+{% endblock %}
