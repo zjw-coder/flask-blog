@@ -21,7 +21,7 @@
 # 安装
 
 ```bash
-$ git clone https://github.com/jzhmcoo1/MyBlog.git
+$ git clone https://https://github.com/zjw-coder/flask-blog.git
 $ cd MyBlog
 ```
 
