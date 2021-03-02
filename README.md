@@ -25,7 +25,7 @@ $ git clone https://https://github.com/zjw-coder/flask-blog.git
 $ cd MyBlog
 ```
 
-On Windows cmd:
+在 Windows cmd:
 
 ```
 $ py -3 -m venv venv
@@ -36,8 +36,7 @@ $ venv\Scripts\activate.bat
 
 # 本地运行
 
-
-Or on Windows cmd:
+在 Windows cmd:
 
 ```bash
 > set FLASK_APP=flaskr
@@ -46,7 +45,7 @@ Or on Windows cmd:
 > flask run
 ```
 
- Open http://127.0.0.1:5000 in your browser.
+在浏览器打开 http://127.0.0.1:5000 .
 
 # 项目结构
 
@@ -101,18 +100,7 @@ Or on Windows cmd:
         └── update.html
 ```
 
-# TODO：
 
-- [x] 登录，注销，注册功能
-- [x] 支持图片上传
-- [x] 个人资料页
-- [x] 支持 markdown 写作
-- [x] valine评论引入
-- [ ] 目录功能
-- [ ] 上传 md 文件
-- [ ] 更美观的个人资料页
-- [ ] 更改 md 渲染主题
-- [ ] More
 
 
 
